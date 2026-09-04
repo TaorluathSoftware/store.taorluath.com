@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Taorluath Store</title>
+  <meta name="description" content="Get in touch with the Taorluath Store." />
+  <link rel="stylesheet" href="styles.css?v=22" />
+</head>
+<body>
+  <div id="site-header"></div>
+  <main>
+    <div class="page-head">
+      <h1>Contact us</h1>
+      <p>Questions about a product or an order? Send us a message.</p>
+    </div>
+    <div class="prose">
+      <form id="contact-form">
+        <label class="field"><span>Your name</span>
+          <input id="c-name" type="text" autocomplete="name" required></label>
+        <label class="field"><span>Your email</span>
+          <input id="c-email" type="email" autocomplete="email" required></label>
+        <label class="field"><span>Message</span>
+          <textarea id="c-message" rows="6" required></textarea></label>
+        <button class="btn btn-lg" type="submit">Send message</button>
+        <p id="c-status" style="color:var(--muted);margin-top:12px"></p>
+      </form>
+      <p style="color:var(--muted);margin-top:22px">Or email us directly at
+        <a style="color:var(--accent-text)" href="mailto:store@taorluath.com">store@taorluath.com</a>.</p>
+    </div>
+  </main>
+  <div id="site-footer"></div>
+  <script src="catalog.js?v=22"></script>
+  <script src="store.js?v=22"></script>
+  <script>
+    // Opens the visitor's email client with the message pre-composed.
+    // (Swap this for a form service like Formspree if you want it to send itself.)
+    const STORE_EMAIL = "store@taorluath.com";
+    document.getElementById("contact-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = document.getElementById("c-name").value.trim();
+      const email = document.getElementById("c-email").value.trim();
+      const message = document.getElementById("c-message").value.trim();
+      if (!name || !email || !message) return;
+      const subject = encodeURIComponent(`Store enquiry from ${name}`);
+      const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
+      window.location.href = `mailto:${STORE_EMAIL}?subject=${subject}&body=${body}`;
+      document.getElementById("c-status").textContent =
+        "Opening your email app… if nothing happens, email us at " + STORE_EMAIL + ".";
+    });
+  </script>
+</body>
+</html>
